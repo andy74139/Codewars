@@ -39,9 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BandNameGenerator.cs" />
+    <Compile Include="SixBySixSkyscrapers.cs" />
     <Compile Include="DeatAnts.cs" />
     <Compile Include="LargestSumOfAllContiguousSubsequences.cs" />
     <Compile Include="FactorialTail.cs" />
+    <Compile Include="BaseConversion.cs" />
     <Compile Include="StringAverage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -55,6 +55,7 @@
     <Compile Include="CodeWarsTest.cs" />
     <Compile Include="CollectionTest.cs" />
     <Compile Include="CodilityTest.cs" />
+    <Compile Include="KataTests.cs" />
     <Compile Include="M4LibTest\RangeTest.cs" />
     <Compile Include="LeetCodeTest.cs" />
     <Compile Include="Euler14_Test.cs" />
