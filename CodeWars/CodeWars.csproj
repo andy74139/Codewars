@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CountingDuplicates.cs" />
+    <Compile Include="SumByFactors.cs" />
     <Compile Include="BandNameGenerator.cs" />
     <Compile Include="SixBySixSkyscrapers.cs" />
     <Compile Include="DeatAnts.cs" />
