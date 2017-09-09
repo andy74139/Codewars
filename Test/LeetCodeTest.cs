@@ -11,6 +11,13 @@ namespace Test
     [TestFixture]
     public class LeetCodeTest
     {
+        [TestCase(new[] {2, 7, 11, 15}, 9, ExpectedResult = new[] {0, 1})]
+        [TestCase(new[] {15, 2, 5, 11, 7}, 9, ExpectedResult = new[] {1, 4})]
+        public int[] Leetcode1(int[] nums, int target)
+        {
+            return new Solution().TwoSum(nums, target);
+        }
+
         private IEnumerable<TestCaseData> TestDataFor174()
         {
             return new[]
