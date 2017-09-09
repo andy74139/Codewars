@@ -7,20 +7,20 @@ namespace Test
     [TestFixture]
     public class CodeWarsTest
     {
-        [Test]
-        public void NextBiggerNumberTest()
+        [TestCase(12, ExpectedResult = 21)]
+        [TestCase(513, ExpectedResult = 531)]
+        [TestCase(2017, ExpectedResult = 2071)]
+        [TestCase(683658261, ExpectedResult = 683658612)]
+        [TestCase(683658162, ExpectedResult = 683658216)]
+        [TestCase(414, ExpectedResult = 441)]
+        [TestCase(144, ExpectedResult = 414)]
+        [TestCase(9, ExpectedResult = -1)]
+        [TestCase(111, ExpectedResult = -1)]
+        [TestCase(531, ExpectedResult = -1)]
+        [TestCase(1234567890, ExpectedResult = 1234567908)]
+        public long NextBiggerNumberTest(long n)
         {
-            Assert.AreEqual(21, Kata.NextBiggerNumber(12));
-            Assert.AreEqual(531, Kata.NextBiggerNumber(513));
-            Assert.AreEqual(2071, Kata.NextBiggerNumber(2017));
-            Assert.AreEqual(683658612, Kata.NextBiggerNumber(683658261));
-            Assert.AreEqual(683658216, Kata.NextBiggerNumber(683658162));
-            Assert.AreEqual(441, Kata.NextBiggerNumber(414));
-            Assert.AreEqual(414, Kata.NextBiggerNumber(144));
-            Assert.AreEqual(-1, Kata.NextBiggerNumber(9));
-            Assert.AreEqual(-1, Kata.NextBiggerNumber(111));
-            Assert.AreEqual(-1, Kata.NextBiggerNumber(531));
-            Assert.AreEqual(1234567908, Kata.NextBiggerNumber(1234567890));
+            return Kata.NextBiggerNumber(n);
         }
 
         [Test]
