@@ -20,6 +20,7 @@ namespace Test
             Assert.AreEqual(-1, Kata.NextBiggerNumber(9));
             Assert.AreEqual(-1, Kata.NextBiggerNumber(111));
             Assert.AreEqual(-1, Kata.NextBiggerNumber(531));
+            Assert.AreEqual(1234567908, Kata.NextBiggerNumber(1234567890));
         }
 
         [Test]

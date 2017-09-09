@@ -10,49 +10,90 @@ namespace CodeWars
         {
             if (n < 12) return -1;
             
-            var backDigitCounts = new [] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-            var lastDigit = -1;
-            var frontNum = n;
-            while (frontNum > 0)
+            string numReversed = ReverseNum(n);
+            for (var indexReversed = 0; indexReversed < numReversed.Length; indexReversed++)
             {
-                var thisDigit = (int)(frontNum % 10);
-                backDigitCounts[thisDigit]++;
-                frontNum /= 10;
+                var digit = numReversed[indexReversed];
+                var lastDigit = indexReversed > 0 ? numReversed[indexReversed - 1] : '0';
 
-                if (thisDigit < lastDigit)
-                {
-                    // find smallest num which greater than thisDigit
-                    var nextBiggerThisDigit = GetNextBiggerThisDigit(thisDigit, backDigitCounts);
-
-                    // then, put digits in backDigitCounts from small to big
-                    var backNum = GetBackNum(nextBiggerThisDigit, backDigitCounts);
-
-                    return System.Convert.ToInt64(frontNum > 0 ? frontNum + backNum : backNum);
-                }
-
-                lastDigit = thisDigit;
+                if (digit < lastDigit)
+                    return GetResult(n, indexReversed, numReversed);
             }
+
             return -1;
         }
 
-        private static string GetBackNum(int nextBiggerThisDigit, IList<int> backDigitCounts)
+        private static long GetResult(long n, int indexReversed, string numReversed)
         {
-            var backNum = new StringBuilder(nextBiggerThisDigit.ToString());
-            backDigitCounts[nextBiggerThisDigit]--;
-            for (var digit = 0; digit < 10; digit++)
-            {
-                for (var i = 0; i < backDigitCounts[digit]; i++)
-                    backNum.Append(digit);
-            }
-            return backNum.ToString();
+            var frontUnchangePart = GetFrontUnchangePart(n, indexReversed + 1);
+            var backChangePart = GetBackChangePart(numReversed, indexReversed);
+
+            return CombineFrontAndBackPart(frontUnchangePart, backChangePart);
         }
 
-        private static int GetNextBiggerThisDigit(int thisDigit, IList<int> backDigitCounts)
+        private static long CombineFrontAndBackPart(string frontUnchangePart, string backChangePart)
         {
-            var nextBiggerThisDigit = thisDigit + 1;
-            while (backDigitCounts[nextBiggerThisDigit] == 0)
+            var result = frontUnchangePart != "0" ? frontUnchangePart + backChangePart : backChangePart;
+            return System.Convert.ToInt64(result);
+        }
+
+        private static string GetBackChangePart(string numReversed, int indexReversed)
+        {
+            var digit = (int)char.GetNumericValue(numReversed, indexReversed);
+            
+            var backPartDigitCounts = GetBackPartDigitCounts(numReversed, indexReversed);
+            var nextBiggerDigit = GetNextBiggerDigit(digit, backPartDigitCounts);
+            backPartDigitCounts[nextBiggerDigit]--;
+
+            return nextBiggerDigit + SmallestNum(backPartDigitCounts);
+        }
+
+        private static IList<int> GetBackPartDigitCounts(string numReversed, int iReversed)
+        {
+            var digitCounts = new[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+            for (var i = 0; i <= iReversed; i++)
+            {
+                var digit = (int)char.GetNumericValue(numReversed, i);
+                digitCounts[digit]++;
+            }
+            return digitCounts;
+        }
+
+        private static string GetFrontUnchangePart(long number, int removeDigitAmount)
+        {
+            for (var i = 0; i < removeDigitAmount; i++)
+                number /= 10;
+            return number.ToString();
+        }
+
+        private static string SmallestNum(IList<int> digitCounts)
+        {
+            var sb = new StringBuilder();
+            for (var digit = 0; digit < 10; digit++)
+            {
+                for(var i=0; i<digitCounts[digit]; i++)
+                    sb.Append(digit);
+            }
+            return sb.ToString();
+        }
+
+        private static int GetNextBiggerDigit(int digit, IList<int> backPartDigitCounts)
+        {
+            var nextBiggerThisDigit = digit + 1;
+            while (backPartDigitCounts[nextBiggerThisDigit] == 0)
                 nextBiggerThisDigit++;
             return nextBiggerThisDigit;
+        }
+
+        private static string ReverseNum(long n)
+        {
+            var sb = new StringBuilder();
+            var num = n.ToString();
+            for(var i=num.Length-1; i>-1; i--)
+                sb.Append(num[i]);
+            
+            return sb.ToString();
         }
     }
 
