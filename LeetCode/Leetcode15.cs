@@ -9,6 +9,47 @@ namespace LeetCode
         //Leetcode 15
         public IList<IList<int>> ThreeSum(int[] nums)
         {
+            var orderedNums = nums.OrderBy(x => x).ToArray();
+            return ThreeSumWithOrderedNums(orderedNums).ToList();
+        }
+
+        private static IEnumerable<IList<int>> ThreeSumWithOrderedNums(IReadOnlyList<int> orderedNums)
+        {
+            for (var leftIndex = 0; leftIndex < orderedNums.Count - 2; leftIndex++)
+            {
+                if (DuplicateWithPreviousIndex(orderedNums, leftIndex))
+                    continue;
+
+                var midIndex = leftIndex + 1;
+                for (var rightIndex = orderedNums.Count - 1; rightIndex > midIndex; rightIndex--)
+                {
+                    if (DuplicateWithNextIndex(orderedNums, rightIndex))
+                        continue;
+
+                    var sumLeftRight = orderedNums[leftIndex] + orderedNums[rightIndex];
+                    while (sumLeftRight + orderedNums[midIndex] < 0 && midIndex < rightIndex)
+                        midIndex++;
+
+                    if (midIndex < rightIndex && sumLeftRight + orderedNums[midIndex] == 0)
+                        yield return new[] {orderedNums[leftIndex], orderedNums[midIndex], orderedNums[rightIndex]};
+                }
+            }
+        }
+
+        private static bool DuplicateWithNextIndex(IReadOnlyList<int> orderedNums, int index)
+        {
+            return index != orderedNums.Count - 1 && orderedNums[index] == orderedNums[index + 1];
+        }
+
+        private static bool DuplicateWithPreviousIndex(IReadOnlyList<int> orderedNums, int index)
+        {
+            return index != 0 && orderedNums[index] == orderedNums[index - 1];
+        }
+
+
+        /* Fast Non-Refactor Version
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
             IList<IList<int>> result = new List<IList<int>>();
             var orderedNums = nums.OrderBy(x => x).ToArray();
 
@@ -28,7 +69,7 @@ namespace LeetCode
             }
             return result;
         }
-
+         */
     }
 
     public partial class Solution { }
