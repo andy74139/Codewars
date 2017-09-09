@@ -8,6 +8,21 @@ namespace Test
     public class CodeWarsTest
     {
         [Test]
+        public void NextBiggerNumberTest()
+        {
+            Assert.AreEqual(21, Kata.NextBiggerNumber(12));
+            Assert.AreEqual(531, Kata.NextBiggerNumber(513));
+            Assert.AreEqual(2071, Kata.NextBiggerNumber(2017));
+            Assert.AreEqual(683658612, Kata.NextBiggerNumber(683658261));
+            Assert.AreEqual(683658216, Kata.NextBiggerNumber(683658162));
+            Assert.AreEqual(441, Kata.NextBiggerNumber(414));
+            Assert.AreEqual(414, Kata.NextBiggerNumber(144));
+            Assert.AreEqual(-1, Kata.NextBiggerNumber(9));
+            Assert.AreEqual(-1, Kata.NextBiggerNumber(111));
+            Assert.AreEqual(-1, Kata.NextBiggerNumber(531));
+        }
+
+        [Test]
         public void SampleTest()
         {
             Assert.AreEqual("The Knife", Kata.BandNameGenerator("knife"));

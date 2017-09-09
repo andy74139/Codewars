@@ -8,7 +8,6 @@ namespace Test
     [TestFixture]
     public class Euler_Test
     {
-        [Ignore]
         //[TestCase("Euler.Euler71, Euler", 428570)]
         //[TestCase("Euler.Euler7, Euler", 23514624000)]
         //[TestCase("Euler.Euler11, Euler", 70600674)]
@@ -27,8 +26,9 @@ namespace Test
         //[TestCase("Euler.Euler22, Euler", 871198282)]
         //[TestCase("Euler.Euler23, Euler", 4179871)]
         //[TestCase("Euler.Euler25, Euler", 4782)]
-        [TestCase("Euler.Euler26, Euler", 983)]
-        [TestCase("Euler.Euler27, Euler", -59231)]
+        //[TestCase("Euler.Euler26, Euler", 983)]
+        //[TestCase("Euler.Euler27, Euler", -59231)]
+        [TestCase("Euler.Euler250, Euler", (long)0)]
         public void EulerTest(string eulerClass, object expectedResult)
         {
             Type type = Type.GetType(eulerClass);
