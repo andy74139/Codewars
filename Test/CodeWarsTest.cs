@@ -7,6 +7,13 @@ namespace Test
     [TestFixture]
     public class CodeWarsTest
     {
+        [TestCase("EBG13 rknzcyr.", ExpectedResult = "ROT13 example.")]
+        [TestCase("This is my first ROT13 excercise!", ExpectedResult = "Guvf vf zl svefg EBG13 rkprepvfr!")]
+        public string Rot13Tests(string input)
+        {
+            return Kata.Rot13(input);
+        }
+
         [TestCase(12, ExpectedResult = 21)]
         [TestCase(513, ExpectedResult = 531)]
         [TestCase(2017, ExpectedResult = 2071)]
