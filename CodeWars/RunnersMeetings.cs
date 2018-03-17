@@ -8,7 +8,7 @@ namespace CodeWars
         public int RunnersMeetings(int[] startPositions, int[] speeds)
         {
             var orderedRunners = GetRunnersInOrderByStartPosition(startPositions, speeds);
-            var meetings = CalculateMeetingCardinality(orderedRunners);
+            var meetings = GetMeetings(orderedRunners);
             return GetMaxMeetingCardinality(meetings);
         }
 
@@ -17,7 +17,7 @@ namespace CodeWars
             return meetings.Values.Count > 0 ? meetings.Values.Max(runners => runners.Count) : -1;
         }
 
-        private Dictionary<Meeting, HashSet<Runner>> CalculateMeetingCardinality(Runner[] orderedRunners)
+        private Dictionary<Meeting, HashSet<Runner>> GetMeetings(Runner[] orderedRunners)
         {
             var meetings = new Dictionary<Meeting, HashSet<Runner>>();
             for (int i = 0; i < orderedRunners.Length - 1; i++)
