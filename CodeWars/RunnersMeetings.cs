@@ -27,19 +27,22 @@ namespace CodeWars
                 {
                     var leadingRunner = orderedRunners[j];
                     if (TwoRunnersCanMeet(behindRunner, leadingRunner))
-                    {
-                        var meeting = GetMeeting(behindRunner, leadingRunner);
-                        if (!meetings.ContainsKey(meeting))
-                            meetings[meeting] = new HashSet<Runner>();
-
-                        if (!meetings[meeting].Contains(behindRunner))
-                            meetings[meeting].Add(behindRunner);
-                        if (!meetings[meeting].Contains(leadingRunner))
-                            meetings[meeting].Add(leadingRunner);
-                    }
+                        AddMeeting(meetings, behindRunner, leadingRunner);
                 }
             }
             return meetings;
+        }
+
+        private void AddMeeting(Dictionary<Meeting, HashSet<Runner>> meetings, Runner behindRunner, Runner leadingRunner)
+        {
+            var meeting = GetMeeting(behindRunner, leadingRunner);
+            if (!meetings.ContainsKey(meeting))
+                meetings[meeting] = new HashSet<Runner>();
+
+            if (!meetings[meeting].Contains(behindRunner))
+                meetings[meeting].Add(behindRunner);
+            if (!meetings[meeting].Contains(leadingRunner))
+                meetings[meeting].Add(leadingRunner);
         }
 
         private static bool TwoRunnersCanMeet(Runner behindRunner, Runner leadingRunner)
