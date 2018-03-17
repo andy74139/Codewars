@@ -5,23 +5,21 @@ namespace CodeWars
 {
     public partial class Kata
     {
-        private Dictionary<Meeting, HashSet<Runner>> _Meetings;
-
         public int RunnersMeetings(int[] startPositions, int[] speeds)
         {
-            ResetMeetings();
             var orderedRunners = GetRunnersInOrderByStartPosition(startPositions, speeds);
-            CalculateMeetingCardinality(orderedRunners);
-            return GetMaxMeetingCardinality();
+            var meetings = CalculateMeetingCardinality(orderedRunners);
+            return GetMaxMeetingCardinality(meetings);
         }
 
-        private int GetMaxMeetingCardinality()
+        private int GetMaxMeetingCardinality(Dictionary<Meeting, HashSet<Runner>> meetings)
         {
-            return _Meetings.Values.Count > 0 ? _Meetings.Values.Max(runners => runners.Count) : -1;
+            return meetings.Values.Count > 0 ? meetings.Values.Max(runners => runners.Count) : -1;
         }
 
-        private void CalculateMeetingCardinality(Runner[] orderedRunners)
+        private Dictionary<Meeting, HashSet<Runner>> CalculateMeetingCardinality(Runner[] orderedRunners)
         {
+            var meetings = new Dictionary<Meeting, HashSet<Runner>>();
             for (int i = 0; i < orderedRunners.Length - 1; i++)
             {
                 var behindRunner = orderedRunners[i];
@@ -31,31 +29,22 @@ namespace CodeWars
                     if (TwoRunnersCanMeet(behindRunner, leadingRunner))
                     {
                         var meeting = GetMeeting(behindRunner, leadingRunner);
-                        AddMeeting(meeting, behindRunner, leadingRunner);
+                        if (!meetings.ContainsKey(meeting))
+                            meetings[meeting] = new HashSet<Runner>();
+
+                        if (!meetings[meeting].Contains(behindRunner))
+                            meetings[meeting].Add(behindRunner);
+                        if (!meetings[meeting].Contains(leadingRunner))
+                            meetings[meeting].Add(leadingRunner);
                     }
                 }
             }
+            return meetings;
         }
 
         private static bool TwoRunnersCanMeet(Runner behindRunner, Runner leadingRunner)
         {
             return behindRunner.Speed > leadingRunner.Speed;
-        }
-
-        private void ResetMeetings()
-        {
-            _Meetings = new Dictionary<Meeting, HashSet<Runner>>();
-        }
-
-        private void AddMeeting(Meeting meeting, Runner runner1, Runner runner2)
-        {
-            if (!_Meetings.ContainsKey(meeting))
-                _Meetings[meeting] = new HashSet<Runner>();
-
-            if (!_Meetings[meeting].Contains(runner1))
-                _Meetings[meeting].Add(runner1);
-            if (!_Meetings[meeting].Contains(runner2))
-                _Meetings[meeting].Add(runner2);
         }
 
         private Meeting GetMeeting(Runner runnerOnBack, Runner runnerOnFront)
