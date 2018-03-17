@@ -35,7 +35,7 @@ namespace CodeWars
 
         private void AddMeeting(Dictionary<Meeting, HashSet<Runner>> meetings, Runner behindRunner, Runner leadingRunner)
         {
-            var meeting = GetMeeting(behindRunner, leadingRunner);
+            var meeting = new Meeting(behindRunner, leadingRunner);
             if (!meetings.ContainsKey(meeting))
                 meetings[meeting] = new HashSet<Runner>();
 
@@ -48,13 +48,6 @@ namespace CodeWars
         private static bool TwoRunnersCanMeet(Runner behindRunner, Runner leadingRunner)
         {
             return behindRunner.Speed > leadingRunner.Speed;
-        }
-
-        private Meeting GetMeeting(Runner runnerOnBack, Runner runnerOnFront)
-        {
-            var time = (runnerOnFront.StartPosition - runnerOnBack.StartPosition) / (double)(runnerOnBack.Speed - runnerOnFront.Speed);
-            var position = runnerOnBack.StartPosition + time * runnerOnBack.Speed;
-            return new Meeting(time, position);
         }
 
         private static Runner[] GetRunnersInOrderByStartPosition(int[] startPositions, int[] speeds)
@@ -82,10 +75,10 @@ namespace CodeWars
 
     public struct Meeting
     {
-        public Meeting(double time, double position)
+        public Meeting(Runner behindRunner, Runner leadingRunner)
         {
-            Time = time;
-            Position = position;
+            Time = (leadingRunner.StartPosition - behindRunner.StartPosition) / (double)(behindRunner.Speed - leadingRunner.Speed);
+            Position = behindRunner.StartPosition + Time * behindRunner.Speed;
         }
 
         public double Time { get; }
