@@ -7,12 +7,23 @@ namespace Test
     [TestFixture]
     public class CodeWarsTest
     {
+        [TestCase(new[] { 1, 4, 2 }, new[] { 27, 18, 24 }, ExpectedResult = 3)]
+        [TestCase(new[] { 1, 4, 2 }, new[] { 5, 6, 2 }, ExpectedResult = 2)]
+        [TestCase(new[] { 1, 2, 3 }, new[] { 1, 1, 1 }, ExpectedResult = -1)]
+        [TestCase(new[] { 1, 1000 }, new[] { 23, 22 }, ExpectedResult = 2)]
+        [TestCase(new[] { 1, 1000, 100 }, new[] { -1, -2, 3 }, ExpectedResult = 2)]
+        [TestCase(new[] { 24, -18, -47, -33, -15, 16, 31, 9, 48, -41, -14, -16, 43, 100, -39 }, new[] { 11, 1, 22, 3, 18, 17, 25, 11, 21, 8, 10, 16, 17, 11, 18 }, ExpectedResult = 2)]
+        public int RunnersMeetingsTests(int[] startPositions, int[] speeds)
+        {
+            return new Kata().RunnersMeetings(startPositions, speeds);
+        }
+
         [TestCase("abc", "cde", ExpectedResult = "abCCde")]
         [TestCase("abab", "bababa", ExpectedResult = "ABABbababa")]
         [TestCase("abcdeFgtrzw", "defgGgfhjkwqe", ExpectedResult = "abcDeFGtrzWDEFGgGFhjkWqE")]
         [TestCase("abcdeFg", "defgG", ExpectedResult = "abcDEfgDEFGg")]
         [TestCase("ab", "aba", ExpectedResult = "aBABA")]
-        public string smile67KataTest(string a, string b)
+        public string PlayerWithTwoStringsTests(string a, string b)
         {
             var actual = new Kata().workOnStrings(a, b);
             return actual;
@@ -28,7 +39,7 @@ namespace Test
         [TestCase(135, Result = -1)]
         [TestCase(441, Result = 414)]
         [TestCase(123456798, Result = 123456789)]
-        public long FixedTests(long n)
+        public long NextSmallerTests(long n)
         {
             return Kata.NextSmaller(n);
         }
@@ -74,11 +85,11 @@ namespace Test
         //                       5, 1, 2, 2, 4, 3,
         //                       3, 2, 1, 2, 2, 4};
 
-        //    var expected = new[]{new []{ 2, 1, 4, 3, 5, 6}, 
-        //                         new []{ 1, 6, 3, 2, 4, 5}, 
-        //                         new []{ 4, 3, 6, 5, 1, 2}, 
-        //                         new []{ 6, 5, 2, 1, 3, 4}, 
-        //                         new []{ 5, 4, 1, 6, 2, 3}, 
+        //    var expected = new[]{new []{ 2, 1, 4, 3, 5, 6},
+        //                         new []{ 1, 6, 3, 2, 4, 5},
+        //                         new []{ 4, 3, 6, 5, 1, 2},
+        //                         new []{ 6, 5, 2, 1, 3, 4},
+        //                         new []{ 5, 4, 1, 6, 2, 3},
         //                         new []{ 3, 2, 5, 4, 6, 1 }};
 
         //    var actual = Skyscrapers.SolvePuzzle(clues);
@@ -93,11 +104,11 @@ namespace Test
         //                    0, 4, 0, 0, 0, 0,
         //                    4, 4, 0, 3, 0, 0};
 
-        //    var expected = new[]{new []{ 5, 6, 1, 4, 3, 2 }, 
-        //                     new []{ 4, 1, 3, 2, 6, 5 }, 
-        //                     new []{ 2, 3, 6, 1, 5, 4 }, 
-        //                     new []{ 6, 5, 4, 3, 2, 1 }, 
-        //                     new []{ 1, 2, 5, 6, 4, 3 }, 
+        //    var expected = new[]{new []{ 5, 6, 1, 4, 3, 2 },
+        //                     new []{ 4, 1, 3, 2, 6, 5 },
+        //                     new []{ 2, 3, 6, 1, 5, 4 },
+        //                     new []{ 6, 5, 4, 3, 2, 1 },
+        //                     new []{ 1, 2, 5, 6, 4, 3 },
         //                     new []{ 3, 4, 2, 5, 1, 6 }};
 
         //    var actual = Skyscrapers.SolvePuzzle(clues);
@@ -107,23 +118,24 @@ namespace Test
         //[Test]
         //public void SolvePuzzle3()
         //{
-        //    var clues = new[] { 0, 3, 0, 5, 3, 4, 
+        //    var clues = new[] { 0, 3, 0, 5, 3, 4,
         //                        0, 0, 0, 0, 0, 1,
         //                        0, 3, 0, 3, 2, 3,
         //                        3, 2, 0, 3, 1, 0};
 
-        //    var expected = new[]{new []{ 5, 2, 6, 1, 4, 3 }, 
-        //                         new []{ 6, 4, 3, 2, 5, 1 }, 
-        //                         new []{ 3, 1, 5, 4, 6, 2 }, 
-        //                         new []{ 2, 6, 1, 5, 3, 4 }, 
-        //                         new []{ 4, 3, 2, 6, 1, 5 }, 
+        //    var expected = new[]{new []{ 5, 2, 6, 1, 4, 3 },
+        //                         new []{ 6, 4, 3, 2, 5, 1 },
+        //                         new []{ 3, 1, 5, 4, 6, 2 },
+        //                         new []{ 2, 6, 1, 5, 3, 4 },
+        //                         new []{ 4, 3, 2, 6, 1, 5 },
         //                         new []{ 1, 5, 4, 3, 2, 6 }};
 
         //    var actual = Skyscrapers.SolvePuzzle(clues);
         //    CollectionAssert.AreEqual(expected, actual);
         //}
 
-        Kata k = new Kata();
+        private Kata k = new Kata();
+
         [Test]
         public void BetweenNumeralSystems()
         {
@@ -154,7 +166,6 @@ namespace Test
             public const string ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
             public const string ALPHA_NUMERIC = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         }
-
 
         [Test]
         public void DeadAntCountTest()
@@ -199,5 +210,4 @@ namespace Test
             Assert.AreEqual("n/a", Kata.AverageString(""));
         }
     }
-
 }
