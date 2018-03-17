@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlayWithTwoStrings.cs" />
+    <Compile Include="NextSmaller.cs" />
     <Compile Include="CountingDuplicates.cs" />
     <Compile Include="NextBiggerNumber.cs" />
     <Compile Include="Rot13.cs" />
