@@ -10,26 +10,36 @@ namespace CodeWars
         public int RunnersMeetings(int[] startPositions, int[] speeds)
         {
             ResetMeetings();
-            var orderedRunners = GetOrderedRunners(startPositions, speeds);
-            return CalculateMeetingCardinality(orderedRunners);
+            var orderedRunners = GetRunnersInOrderByStartPosition(startPositions, speeds);
+            CalculateMeetingCardinality(orderedRunners);
+            return GetMaxMeetingCardinality();
         }
 
-        private int CalculateMeetingCardinality(Runner[] orderedRunners)
+        private int GetMaxMeetingCardinality()
+        {
+            return _Meetings.Values.Count > 0 ? _Meetings.Values.Max(runners => runners.Count) : -1;
+        }
+
+        private void CalculateMeetingCardinality(Runner[] orderedRunners)
         {
             for (int i = 0; i < orderedRunners.Length - 1; i++)
             {
-                var runnerOnBack = orderedRunners[i];
+                var behindRunner = orderedRunners[i];
                 for (int j = i + 1; j < orderedRunners.Length; j++)
                 {
-                    var runnerOnFront = orderedRunners[j];
-                    if (runnerOnBack.Speed > runnerOnFront.Speed)
+                    var leadingRunner = orderedRunners[j];
+                    if (TwoRunnersCanMeet(behindRunner, leadingRunner))
                     {
-                        var meeting = GetMeeting(runnerOnBack, runnerOnFront);
-                        AddMeeting(meeting, runnerOnBack, runnerOnFront);
+                        var meeting = GetMeeting(behindRunner, leadingRunner);
+                        AddMeeting(meeting, behindRunner, leadingRunner);
                     }
                 }
             }
-            return _Meetings.Values.Count > 0 ? _Meetings.Values.Max(runners => runners.Count) : -1;
+        }
+
+        private static bool TwoRunnersCanMeet(Runner behindRunner, Runner leadingRunner)
+        {
+            return behindRunner.Speed > leadingRunner.Speed;
         }
 
         private void ResetMeetings()
@@ -39,14 +49,13 @@ namespace CodeWars
 
         private void AddMeeting(Meeting meeting, Runner runner1, Runner runner2)
         {
-            var hashCode = meeting;
-            if (!_Meetings.ContainsKey(hashCode))
-                _Meetings[hashCode] = new HashSet<Runner>();
+            if (!_Meetings.ContainsKey(meeting))
+                _Meetings[meeting] = new HashSet<Runner>();
 
-            if (!_Meetings[hashCode].Contains(runner1))
-                _Meetings[hashCode].Add(runner1);
-            if (!_Meetings[hashCode].Contains(runner2))
-                _Meetings[hashCode].Add(runner2);
+            if (!_Meetings[meeting].Contains(runner1))
+                _Meetings[meeting].Add(runner1);
+            if (!_Meetings[meeting].Contains(runner2))
+                _Meetings[meeting].Add(runner2);
         }
 
         private Meeting GetMeeting(Runner runnerOnBack, Runner runnerOnFront)
@@ -56,16 +65,13 @@ namespace CodeWars
             return new Meeting(time, position);
         }
 
-        private static Runner[] GetOrderedRunners(int[] startPositions, int[] speeds)
+        private static Runner[] GetRunnersInOrderByStartPosition(int[] startPositions, int[] speeds)
         {
             var runners = new Runner[speeds.Length];
             for (int i = 0; i < speeds.Length; i++)
-            {
                 runners[i] = new Runner(startPositions[i], speeds[i]);
-            }
 
-            var orderedRunners = runners.OrderBy(r => r.StartPosition).ToArray();
-            return orderedRunners;
+            return runners.OrderBy(r => r.StartPosition).ToArray();
         }
 
     }
